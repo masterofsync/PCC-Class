@@ -1,0 +1,178 @@
+#!/bin/bash
+
+#Bikesh Maharjan
+#CS140u
+#Assignment7
+#8/11/14
+
+#This program will have a Main Menu where user can choose different options and easily complete desired tasks.
+
+
+function calendar() # Creating a function "calendar" for second option which will ask user to enter month and year and then display the required calendar
+{
+	#Declaring the variables
+	month=0
+	year=0
+
+	#using the while loop to loop until the user enters correct data.
+	while [ $month -lt 1 ] || [ $month -gt 12 ]
+	do
+		read -p "Enter Month(1-12): " month 					#getting month value from user
+ 		
+		if [ $month -lt 1 ] || [ $month -gt 12 ]				#checking if the user entered value other than (1-12)
+		then
+			echo &
+			echo "Error: Please enter between 1-12!"
+			echo &
+		fi	
+	done
+
+	#using the while loop until the user enters correct data for year.
+	while [ $year -gt 9999 ] || [ $year -lt 1 ]
+	do	
+		read -p "Enter Year(1-9999): " year					#getting year value from user
+		
+		if [ $year -gt 9999 ] || [ $year -lt 1 ]
+		then
+			echo &
+			echo "Error: Please enter between 1-9999!";
+			echo &
+		fi	
+	done
+	cal $month $year								#calling the cal command with the given month and year
+}
+
+#directory function for changing directory with some securities
+function directory()
+{
+	#listing available directories in current working directory
+	echo "Directories: "
+	ls -d */
+	echo &	
+
+	direc=""	
+
+	read -p "Enter a directory: " direc							#getting directory name from user
+	hom='$HOME'
+
+	
+	if [ -d $direc ] || [ $direc = $hom ] || [ $direc =  "~" ] || [ -z $direc ]		#checking if the entered name is a directory or is $HOME, or is ~ or is empty
+	then	
+		if [ -x $direc ] || [ $direc = $hom ] || [ $direc = "~" ] || [ -z $direc ]	#checking if the entered directory is accessible, or is $HOME, or is ~, or is empty 
+		then
+			if [ "$direc" = $hom ] || [ "$direc" = "~" ] || [ -z $direc ]		#checking if the entered name is $HOME, or ~ or is empty
+			then
+				cd ~
+			else
+				cd $direc
+			fi
+		else
+			echo "Directory not acessible"
+		fi
+	else
+		echo "Directory not found"
+	fi
+} 
+
+#function to start vi editor after some checking
+function startvieditor()
+{
+	
+	read -p "Enter filename: " files								#getting filename from user
+			
+	if [ -f $files ] && [ -r $files ] && [ ! -d $files ] || [ ! -e $files ] && [ ! -d $files ]	#checking if the file is ordinary text file , if its readable, if its not a directory, or if its does not exists and is not a directory
+	then
+		vi $files
+	else
+	echo &
+	echo "Given name not available"
+	echo &		
+	fi
+}
+
+#funtion to email specified user with attachment and subject
+function emailuser()
+{
+	read -p "Enter a username: " user_name								#gettting username from the user to email to.
+	
+	value='grep -cw '^$user_name' /etc/passwd'							#command to check if the username is available in the /etc/passwd folder
+	value1=$value
+	
+	if [ $($value) -eq 1 ] 										#checking if the username exists. 1 if exists and 0 if it doesn't
+	then
+		read -p "Enter filename to attach: " files1						#getting filename to attach with email
+	
+		if [ -f $files1 ] && [ -r $files1 ] && [ ! -d $files1 ] && [ -e $files1 ] 		#checking if file is ordinary text, readable, is not a directory or if it exists and is not a directory.
+		then
+			read -p "Enter subject for the email: " subject					#getting subject from user
+			mail -s $subject $user_name@syccuxfs01.pcc.edu <$files1				#command to email specified user with specified attachment with specified subject
+			echo &
+			echo "Email sent!"
+			echo &
+		else
+			echo "Error: Invalid file"
+			
+		fi
+	else
+		echo "Error: Invalid username"
+	fi
+		
+	
+}
+
+choice=0 ;
+
+#while loop to loop until user entered specified option and repeats until user wants to exit
+while [ $choice -ne 9 ] 
+do
+
+	clear
+	echo " *****************************************************************"
+	echo "*******************ELCOME TO MAIN MENU BY BIKESH*******************"
+	echo " *****************************************************************"
+
+	echo "1. Logged in Users"
+	echo "2. Calendar for specific month/year"
+	echo "3. Current directory path"
+	echo "4. Change directory"
+	echo "5. Long listing of visible files in the current directory"
+	echo "6. Display current time and date and calendar"
+	echo "7. Start the vi editor"
+	echo "8. Email a file to a user"
+	echo "9. Quit"
+
+	read -p "Enter you choice: " choice								#getting the choice from user
+
+	echo
+
+	case "$choice" in
+	1) who ;;											#displaying logged in users
+
+	2) calendar ;;											#calling the calendar function
+	
+	3) pwd ;;											#displaying current directory path 
+
+	4) directory ;;											#calling the directory function
+	
+	5) ls -l | more ;;										#displaying the long listing of visible files in the current directory one page at a time
+
+	6) date												#displaying current date/time
+	   cal ;;											#displaying current calendar
+	
+	7) startvieditor ;;										#calling the function
+	
+	8) emailuser ;;											#calling the function
+		
+	9)echo "Thank You for using the Main Menu!" ;;
+
+	*) echo "Error: Invalid option.....";;								#error checking if user enters invalid option
+	
+	
+	esac
+	echo &
+
+	if [ $choice != 9 ]
+	then 
+		read -p "Press [Enter] to continue....." readEnterKey					#creating a pause so that user can see results properly 
+	fi
+done
