@@ -1,9 +1,0 @@
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\bin\Debug\pacgame.exe.config
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\bin\Debug\pacgame.exe
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\bin\Debug\pacgame.pdb
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\obj\Debug\pacgame.csprojResolveAssemblyReference.cache
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\obj\Debug\pacgame.Form1.resources
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\obj\Debug\pacgame.Properties.Resources.resources
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\obj\Debug\pacgame.csproj.GenerateResource.Cache
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\obj\Debug\pacgame.exe
-c:\users\bikesh\documents\visual studio 2012\Projects\pacgame\pacgame\obj\Debug\pacgame.pdb
